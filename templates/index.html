@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<title>InsideSherpa</title>
+<head>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dropzone.css') }}" />
+  <script type="text/javascript" src="{{ url_for('static', filename='dropzone.js') }}"></script>
+</head>
+<body>
+
+  <!-- Dropzone upload area -->
+  <form action="/upload" style="border: 2px dashed black; background-color: white; width: 300px;left: 50%;
+  transform: translate(-50%, -50%); display: table-cell; position: fixed; top:15%;"
+         class="dropzone" id="sherpazone" method="POST" enctype="multipart/form-data">
+  </form>
+
+  <!-- Listing existing files -->
+  <ul class="container">
+    <span style="vertical-align: middle; font-size: 30px; margin-bottom: 15px;"><b>Existing Files</b></span>
+    {% for item in tree.children recursive %}
+        <li>
+          <img style="height: 5%; width: 5%" src="https://image.flaticon.com/icons/svg/148/148957.svg" />
+          <a href="{{ url_for('download', filename=item.name) }}">{{ item.name }}</a>
+        </li>
+    {% endfor %}
+  </ul>
+
+</body>
+
+  <!-- Footer -->
+  <div class="footer">
+    <img style=" height: 10%; width: 10%;" src="https://s3.amazonaws.com/insidesherpa/Icons/med_insidesherpa_grey_circle_logo.png" />
+  </div>
+
+  <!-- Dropzone Customisation -->
+<script type="text/javascript">
+  Dropzone.options.sherpazone = {
+    clickable: false,
+    maxFiles: 8,
+    dictDefaultMessage: "Upload a file! (8 files max)",
+    init: function() {
+      this.on("success", function(file) { document.location.reload(true) });
+    }
+  };
+</script>
+</html>
