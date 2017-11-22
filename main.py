@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import os
 from flask import Flask, request, render_template, send_from_directory
 from werkzeug.utils import secure_filename
